@@ -1,6 +1,6 @@
 <template>
   <div class="hello">
-    <h1>Kumpulan pertanyaan-pertanyaan</h1>
+    <h1>Result</h1>
   </div>
 </template>
 
