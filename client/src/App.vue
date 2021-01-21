@@ -1,7 +1,11 @@
 <template>
   <div id="app">
-    <Home/>
-    <Quiz/>
+    <div class="row">
+      <Home v-if="start == false" @start="isStart" />
+    </div>
+    <div class="row">
+      <Quiz v-if="start == true"/>
+    </div>
   </div>
 </template>
 <script>
@@ -13,6 +17,16 @@ export default {
   components: {
     Quiz,
     Home
+  },
+  data () {
+    return {
+      start: false
+    }
+  },
+  methods: {
+    isStart (payload) {
+      this.start = payload
+    }
   }
 }
 </script>
@@ -25,4 +39,5 @@ export default {
   text-align: center;
   color: #2c3e50;
 }
+
 </style>
