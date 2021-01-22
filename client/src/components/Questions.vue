@@ -10,7 +10,8 @@
         </div>
         <h2 class="mt-3 mb-3">Guess the animal in the picture!</h2>
           <div class="container" v-if="status === true">
-            <img :src="this.fetchQuestion.questions[this.index].croped_image" width="400px" ><br><br>
+            <img v-if="this.answer === false" :src="this.fetchQuestion.questions[this.index].croped_image" width="400px" ><br><br>
+            <img v-if="this.answer === true" :src="this.fetchQuestion.questions[this.index].real_image" width="400px" ><br><br>
             <form @keypress.enter.prevent="submitAnswer">
               <div class="form-floating mb-3">
                 <input v-model="user_answer" type="text" class="form-control" id="floatingInput" placeholder="name@example.com">
@@ -33,8 +34,9 @@ export default {
       image: '',
       jokes: '',
       user_answer: '',
-      countDown: 5,
-      timer: null
+      countDown: 8,
+      timer: null,
+      answer: false
     }
   },
   methods: {
@@ -45,16 +47,20 @@ export default {
     game () {
       if (this.index < 10) {
         if (this.countDown > 0) {
-          this.timer = setTimeout(() => {
+        this.timer = setTimeout(() => {
+          this.countDown -= 1
+          if (this.countDown === 3) {
+            this.answer = true
+            this.game()
             this.countDown -= 1
-            if (this.countDown === 0) {
-              this.index += 1
-              this.status = false
-              this.countDown = 5
-              this.start()
-            } else {
-              this.game()
-            }
+          } else if (this.countDown === 0) {
+            this.index += 1
+            this.status = false
+            this.countDown = 5
+            this.answer = false
+            this.start()
+          } else {
+            this.game()
           }, 1000)
         }
       } else {
@@ -83,7 +89,6 @@ export default {
   min-height: 400px;
   overflow: hidden
 }
-
 :-moz-placeholder {
   text-align: center;
 }
