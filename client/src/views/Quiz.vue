@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div v-if="gameOver === false" class="row">
-      <Questions />
+      <Questions @endGame="endGame"/>
     </div>
     <div v-else class="row">
       <Result/>
@@ -17,6 +17,11 @@ export default {
   data () {
     return {
       gameOver: false
+    }
+  },
+  methods: {
+    endGame () {
+      this.gameOver = true
     }
   },
   components: {

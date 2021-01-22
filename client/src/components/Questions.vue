@@ -43,18 +43,22 @@ export default {
       this.game()
     },
     game () {
-      if (this.countDown > 0) {
-        this.timer = setTimeout(() => {
-          this.countDown -= 1
-          if (this.countDown === 0) {
-            this.index += 1
-            this.status = false
-            this.countDown = 5
-            this.start()
-          } else {
-            this.game()
-          }
-        }, 1000)
+      if (this.index < 10) {
+        if (this.countDown > 0) {
+          this.timer = setTimeout(() => {
+            this.countDown -= 1
+            if (this.countDown === 0) {
+              this.index += 1
+              this.status = false
+              this.countDown = 5
+              this.start()
+            } else {
+              this.game()
+            }
+          }, 1000)
+        }
+      } else {
+        this.$emit('endGame')
       }
     }
   },
