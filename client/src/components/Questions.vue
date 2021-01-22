@@ -1,16 +1,16 @@
 <template>
   <div class="hello">
-    <h1>Kumpulan pertanyaan-pertanyaan</h1>
+    <button class="btn-primary" @click="start">Start Game</button>
     <div class="wrapper">
       <div class="row-2 quiz">
         <div class="d-flex justify-content-around">
           <div class="p-2 bd-highlight">{{ nickname }}</div>
-          <div class="p-2 bd-highlight">Countdown? wkw</div>
+          <div class="p-2 bd-highlight">{{ countDown }}</div>
           <div class="p-2 bd-highlight">SCORE: </div>
         </div>
         <h2 class="mt-3 mb-3">Guess the animal in the picture!</h2>
-        <img :src="image" width="400px"><br><br>
-          <div class="container">
+          <div class="container" v-if="status === true">
+            <img :src="this.fetchQuestion.questions[this.index].croped_image" width="400px" ><br><br>
             <form @keypress.enter.prevent="submitAnswer">
               <div class="form-floating mb-3">
                 <input v-model="user_answer" type="text" class="form-control" id="floatingInput" placeholder="name@example.com">
@@ -28,22 +28,30 @@ export default {
   name: 'Questions',
   data () {
     return {
+      status: false,
+      index: 0,
       image: '',
       jokes: '',
-      user_answer: ''
+      user_answer: '',
+      countDown: 5
     }
   },
-  methods: {},
+  methods: {
+    start () {
+      this.status = true
+      this.game()
+    },
+    game () {
+      setInterval(function () { this.status = false }, 3000)
+      console.log(this.countDown)
+    }
+  },
   computed: {
     nickname () {
       return this.$store.state.players
-    }
-  },
-  sockets: {
-    questions (payload) {
-      console.log(payload)
-      this.image = payload.data[0].real_image
-      this.jokes = payload.data[0].jokes
+    },
+    fetchQuestion () {
+      return this.$store.state.fetchQuestion
     }
   }
 }

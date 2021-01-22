@@ -5,11 +5,15 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    players: []
+    players: [],
+    fetchQuestion: []
   },
   mutations: {
     insertNickname (state, payload) {
       state.players.push(payload)
+    },
+    SOCKET_questions (state, payload) {
+      state.fetchQuestion = payload
     }
   },
   actions: {

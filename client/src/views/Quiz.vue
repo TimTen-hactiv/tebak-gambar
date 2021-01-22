@@ -1,7 +1,6 @@
 <template>
   <div class="container">
     <div v-if="gameOver === false" class="row">
-      <h3> ini bagian pertanyaan </h3>
       <Questions />
     </div>
     <div v-else class="row">
@@ -17,7 +16,7 @@ export default {
   name: 'Quiz',
   data () {
     return {
-      gameOver: true
+      gameOver: false
     }
   },
   components: {
