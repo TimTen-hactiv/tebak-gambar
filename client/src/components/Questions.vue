@@ -45,7 +45,8 @@ export default {
       this.game()
     },
     game () {
-      if (this.countDown > 0) {
+      if (this.index < 10) {
+        if (this.countDown > 0) {
         this.timer = setTimeout(() => {
           this.countDown -= 1
           if (this.countDown === 3) {
@@ -60,8 +61,10 @@ export default {
             this.start()
           } else {
             this.game()
-          }
-        }, 1000)
+          }, 1000)
+        }
+      } else {
+        this.$emit('endGame')
       }
     }
   },
