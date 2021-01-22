@@ -33,7 +33,8 @@ export default {
       image: '',
       jokes: '',
       user_answer: '',
-      countDown: 5
+      countDown: 5,
+      timer: null
     }
   },
   methods: {
@@ -42,8 +43,19 @@ export default {
       this.game()
     },
     game () {
-      setInterval(function () { this.status = false }, 3000)
-      console.log(this.countDown)
+      if (this.countDown > 0) {
+        this.timer = setTimeout(() => {
+          this.countDown -= 1
+          if (this.countDown === 0) {
+            this.index += 1
+            this.status = false
+            this.countDown = 5
+            this.start()
+          } else {
+            this.game()
+          }
+        }, 1000)
+      }
     }
   },
   computed: {
