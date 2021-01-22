@@ -34,6 +34,9 @@ export default {
   },
   methods: {
     start () {
+      if (this.nickname === '') {
+        this.nickname = 'Player'
+      }
       this.$emit('start', true)
       this.$store.commit('insertNickname', this.nickname)
     }

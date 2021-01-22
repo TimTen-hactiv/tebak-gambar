@@ -1,9 +1,9 @@
 <template>
-  <div id="app">
-    <div class="row">
+  <div id="app" class="container">
+    <div id="home" class="row">
       <Home v-if="start == false" @start="isStart" />
     </div>
-    <div class="row">
+    <div id="quiz" class="row">
       <Quiz v-if="start == true"/>
     </div>
   </div>
@@ -38,6 +38,14 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+  margin: auto;
 }
 
+#home {
+  margin-top: 10vh;
+}
+
+#quiz {
+  margin-top: 2vh;
+}
 </style>
