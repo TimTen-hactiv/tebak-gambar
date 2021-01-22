@@ -15,7 +15,7 @@
             <h4 v-if="this.answer === true"> {{fetchQuestion.questions[this.index].jokes}} </h4>
             <form @keypress.enter.prevent="submitAnswer">
               <div class="form-floating mb-3">
-                <input v-model="user_answer" type="text" class="form-control" id="floatingInput" placeholder="name@example.com">
+                <input v-if="this.answer === false" v-model="user_answer" type="text" class="form-control" id="floatingInput" placeholder="name@example.com">
                 <label for="floatingInput">Type your answer</label>
               </div>
             </form>
@@ -41,8 +41,7 @@ export default {
   },
   methods: {
     start () {
-      this.status = true
-      this.game()
+      this.$socket.emit('start')
     },
     game () {
       if (this.index < 10) {
@@ -78,6 +77,12 @@ export default {
         this.score += 10
       }
       this.user_answer = ''
+    }
+  },
+  sockets: {
+    startAll () {
+      this.status = true
+      this.game()
     }
   },
   computed: {

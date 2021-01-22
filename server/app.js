@@ -2,19 +2,34 @@ const express = require('express')
 const app = express()
 const server = require('http').createServer(app)
 const io = require('socket.io')(server)
-const port = 3000
+const port = process.env.PORT || 3001
 const questions = require('./question.json')
 
-let score = 0
 let results = []
+
+// let winner = (results, userName) => {
+  
+// }
 
 io.on('connection', (socket) => {
   console.log('Socket.io client connected')
-  socket.emit('questions', { questions } )
+  io.emit('questions', { questions } )
 
   socket.on('playersResult', function (payload) {
+    results = []
     results.push(payload)
     console.log(results);
+    io.emit('winnerResult', results)
+  })
+
+
+  // socket.on('username', function (payload) {
+  //   userName.push(payload)
+
+  // })
+
+  socket.on('start', () =>{
+    io.emit('startAll')
   })
   
 })

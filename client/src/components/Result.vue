@@ -5,8 +5,8 @@
       <div id="juara-pertama" class="col-6">
         <h1>1st Place</h1>
         <img src="https://dlvkyia8i4zmz.cloudfront.net/q1d9Ez8SpWQJVKHxC7wA_gold.gif" alt="this slowpoke moves"  width=250 />
-        <h3>Haikal</h3>
-        <h4>Score : 100</h4>
+        <h3>{{ firstName }}</h3>
+        <h4>{{ firstScore }}</h4>
       </div>
       <div id="juara-kedua" class="col-6">
         <h1>2nd Place</h1>
@@ -20,7 +20,19 @@
 
 <script>
 export default {
-  name: 'Result'
+  data () {
+    return {
+      firstName: '',
+      firstScore: ''
+    }
+  },
+  name: 'Result',
+  sockets: {
+    winnerResult (payload) {
+      this.firstName = payload[0].nickname[0]
+      this.firstScore = payload[0].score
+    }
+  }
 }
 </script>
 <style scoped>

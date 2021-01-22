@@ -39,6 +39,7 @@ export default {
       }
       this.$emit('start', true)
       this.$store.commit('insertNickname', this.nickname)
+      this.$socket.emit('username', this.nickname)
     }
   }
 }
