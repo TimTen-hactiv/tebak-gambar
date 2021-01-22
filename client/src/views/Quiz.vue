@@ -1,13 +1,10 @@
 <template>
-  <div class="quiz">
-    <h1>This is Quiz page</h1>
-    {{ nickname }}
-    <div>
+  <div class="container">
+    <div v-if="gameOver === false" class="row">
       <h3> ini bagian pertanyaan </h3>
-      <Questions/>
+      <Questions />
     </div>
-    <div>
-      <h3> ini bagian result</h3>
+    <div v-else class="row">
       <Result/>
     </div>
   </div>
@@ -18,6 +15,11 @@ import Result from '../components/Result'
 
 export default {
   name: 'Quiz',
+  data () {
+    return {
+      gameOver: true
+    }
+  },
   components: {
     Questions,
     Result
