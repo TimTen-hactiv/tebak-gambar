@@ -6,7 +6,7 @@
         <div class="d-flex justify-content-around">
           <div class="p-2 bd-highlight">{{ nickname }}</div>
           <div class="p-2 bd-highlight">{{ countDown }}</div>
-          <div class="p-2 bd-highlight">SCORE: </div>
+          <div class="p-2 bd-highlight">SCORE: {{score}}</div>
         </div>
         <h2 class="mt-3 mb-3">Guess the animal in the picture!</h2>
           <div class="container" v-if="status === true">
@@ -32,12 +32,11 @@ export default {
     return {
       status: false,
       index: 0,
-      image: '',
-      jokes: '',
       user_answer: '',
       countDown: 8,
       timer: null,
-      answer: false
+      answer: false,
+      score: 0
     }
   },
   methods: {
@@ -51,6 +50,7 @@ export default {
           this.timer = setTimeout(() => {
             this.countDown -= 1
             if (this.countDown === 3) {
+              this.checkAnswers(this.user_answer)
               this.answer = true
               this.game()
             } else if (this.countDown === 0) {
@@ -65,8 +65,19 @@ export default {
           }, 1000)
         }
       } else {
+        const payload = {
+          nickname: this.nickname,
+          score: this.score
+        }
+        this.$socket.emit('playersResult', payload)
         this.$emit('endGame')
       }
+    },
+    checkAnswers (payload) {
+      if (payload === this.fetchQuestion.questions[this.index].answer) {
+        this.score += 10
+      }
+      this.user_answer = ''
     }
   },
   computed: {
