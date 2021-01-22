@@ -12,6 +12,7 @@
           <div class="container" v-if="status === true">
             <img v-if="this.answer === false" :src="this.fetchQuestion.questions[this.index].croped_image" width="400px" ><br><br>
             <img v-if="this.answer === true" :src="this.fetchQuestion.questions[this.index].real_image" width="400px" ><br><br>
+            <h4 v-if="this.answer === true"> {{fetchQuestion.questions[this.index].jokes}} </h4>
             <form @keypress.enter.prevent="submitAnswer">
               <div class="form-floating mb-3">
                 <input v-model="user_answer" type="text" class="form-control" id="floatingInput" placeholder="name@example.com">
@@ -47,20 +48,20 @@ export default {
     game () {
       if (this.index < 10) {
         if (this.countDown > 0) {
-        this.timer = setTimeout(() => {
-          this.countDown -= 1
-          if (this.countDown === 3) {
-            this.answer = true
-            this.game()
+          this.timer = setTimeout(() => {
             this.countDown -= 1
-          } else if (this.countDown === 0) {
-            this.index += 1
-            this.status = false
-            this.countDown = 5
-            this.answer = false
-            this.start()
-          } else {
-            this.game()
+            if (this.countDown === 3) {
+              this.answer = true
+              this.game()
+            } else if (this.countDown === 0) {
+              this.index += 1
+              this.status = false
+              this.countDown = 8
+              this.answer = false
+              this.start()
+            } else {
+              this.game()
+            }
           }, 1000)
         }
       } else {
